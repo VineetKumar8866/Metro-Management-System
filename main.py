@@ -2,7 +2,7 @@ from tabulate import tabulate
 import mysql.connector as mysql
 from datetime import datetime
 
-db = mysql.connect(host="localhost", user="root", passwd="", database="metro")
+db = mysql.connect(host="localhost", user="root", passwd="admin", database="metro")
 cur = db.cursor()
 
 
@@ -203,6 +203,27 @@ def menu():
     return c
 
 
+def see_fair_matrix():
+    cur.execute("select * from fair")
+    d = cur.fetchall()
+    h = [
+        "",
+        "mnp",
+        "ind",
+        "bhm",
+        "bdn",
+        "itc",
+        "uni",
+        "kds",
+        "hzg",
+        "chr",
+        "alm",
+        "krn",
+        "amu",
+    ]
+    print(tabulate(d, tablefmt="simple_grid", headers=h))
+
+
 def user_page(username, cardno=None):
     c = ""
     while c != "exit":
@@ -282,7 +303,8 @@ def admin_page():
             ["To see fair price press 7"],
             ["To decline a card press 8"],
             ["To see registered cards press 9 "],
-            ["To go back to login page press 10"],
+            ["To see fair matrix press 10"],
+            ["To go back to login page press 11"],
             ['To exit type "exit"'],
         ]
         print(tabulate(t, tablefmt="double_outline"))
@@ -327,6 +349,8 @@ def admin_page():
         elif c == "9":
             see_cards()
         elif c == "10":
+            see_fair_matrix()
+        elif c == "11":
             login_page()
             return None
         elif c == "exit":

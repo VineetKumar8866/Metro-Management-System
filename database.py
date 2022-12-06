@@ -37,7 +37,7 @@ revenue int
 
 d = """
 create table fair(
-    city varchar(20), 
+    'f/t' varchar(20), 
     mnp int, 
     ind int, 
     bhm int,
