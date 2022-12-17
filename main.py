@@ -7,7 +7,7 @@ cur = db.cursor()
 
 
 def fair_calc(f, t):
-    v = "select {} from fair where city='{}'".format(f, t)
+    v = "select {} from fair where station='{}'".format(f, t)
     cur.execute(v)
     c = cur.fetchone()[0]
     return c
@@ -26,7 +26,7 @@ def see_route():
         ["Charbagh", "chr"],
         ["Alambagh", "alm"],
         ["Krishna Nagar", "krn"],
-        ["Amausi Air Port", "amu"],
+        ["CCS Airport", "ccs"],
     ]
     print(
         tabulate(l, tablefmt="rounded_grid", headers=["Station Name", "Station Code"])
@@ -89,7 +89,7 @@ def see_users():
 
 
 def price_change(f, t, p):
-    cur.execute("update fair set {}={} where city='{}'".format(f, p, t))
+    cur.execute("update fair set {}={} where station='{}'".format(f, p, t))
     db.commit()
 
 
@@ -135,10 +135,13 @@ def get_token(username):
         return None
     token = int(input("Enter number of tokens: "))
     r = input("Do you want return tickets y/n? :")
-    c = input("Do you have card y/n? : ")
+    c = input("Do you want to use your metro card y/n? : ")
     price = (fair_calc(f, t) if r == "n" else fair_calc(f, t) * 2) * token
     cur.execute("select userid from users")
-    userid = cur.fetchall()[-1][0] + 1
+    try:
+        userid = cur.fetchall()[-1][0] + 1
+    except:
+        userid = 1
     if c == "y":
         cardno = int(input("Enter card number: "))
         cur.execute("select balance from cards where card={}".format(cardno))
@@ -219,12 +222,12 @@ def see_fair_matrix():
         "chr",
         "alm",
         "krn",
-        "amu",
+        "ccs",
     ]
     print(tabulate(d, tablefmt="simple_grid", headers=h))
 
 
-def user_page(username, cardno=None):
+def user_page(username):
     c = ""
     while c != "exit":
         t = [
@@ -372,11 +375,7 @@ def login_page():
             login_page()
     elif c == 2:
         username = input("Enter user name: ")
-        if input("Do you have card(y/n): ") == "y":
-            cardno = int(input("Enter card number: "))
-            user_page(username, cardno)
-        else:
-            user_page(username)
+        user_page(username)
 
 
 login_page()

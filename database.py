@@ -1,11 +1,11 @@
 import mysql.connector as mysql
 
-db1 = mysql.connect(host="localhost", user="root", passwd="")
+db1 = mysql.connect(host="localhost", user="root", passwd="admin")
 cur2 = db1.cursor()
 cur2.execute("drop database metro")
 cur2.execute("create database metro")
 
-db = mysql.connect(host="localhost", user="root", passwd="", database="metro")
+db = mysql.connect(host="localhost", user="root", passwd="admin", database="metro")
 cur = db.cursor()
 
 a = """
@@ -37,7 +37,7 @@ revenue int
 
 d = """
 create table fair(
-    'f/t' varchar(20), 
+    station varchar(20), 
     mnp int, 
     ind int, 
     bhm int,
@@ -49,7 +49,7 @@ create table fair(
     chr int, 
     alm int, 
     krn int, 
-    amu int
+    ccs int
 )
 """
 e1 = "insert into fair values('mnp',0,10,20,30,40,50,60,70,80,90,100,110)"
@@ -63,8 +63,8 @@ e8 = "insert into fair values('hzg',70,60,50,40,30,20,10,0,10,20,30,40)"
 e9 = "insert into fair values('chr',80,70,60,50,40,30,20,10,0,10,20,30)"
 e10 = "insert into fair values('alm',90,80,70,60,50,40,30,20,10,0,10,20)"
 e11 = "insert into fair values('krn',100,90,80,70,60,50,40,30,20,10,0,10)"
-e12 = "insert into fair values('amu',110,100,90,80,70,60,50,40,30,20,10,0)"
-e13 = "insert into users values(1,'Sample_user','mnp-amu',1,100,1000,1)"
+e12 = "insert into fair values('ccs',110,100,90,80,70,60,50,40,30,20,10,0)"
+e13 = "insert into users values(1,'Sample_user','mnp-ccs',1,100,1000,1)"
 e14 = "insert into cards values(1000,'Sample_user','2000-01-01',0)"
 e15 = "insert into revenue values(0)"
 
